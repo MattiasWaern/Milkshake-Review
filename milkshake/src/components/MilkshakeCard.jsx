@@ -1,21 +1,13 @@
-import './MilkshakeCard.css';
-
 function MilkshakeCard({ milkshake }) {
   const filledStars = Math.round(milkshake.rating);
-  const starString =
-    '★'.repeat(filledStars) + '☆'.repeat(10 - filledStars);
-
+  const starString = '★'.repeat(filledStars) + '☆'.repeat(10 - filledStars);
   const formattedDate = new Date(milkshake.date).toLocaleDateString('sv-SE');
 
   return (
     <article className="milkshake-card">
       {milkshake.imageUrl && (
         <div className="card-image">
-          <img
-            src={milkshake.imageUrl}
-            alt={milkshake.name}
-            loading="lazy"
-          />
+          <img src={milkshake.imageUrl} alt={milkshake.name} loading="lazy" />
         </div>
       )}
 
@@ -34,7 +26,7 @@ function MilkshakeCard({ milkshake }) {
         </div>
 
         {milkshake.comment && (
-          <p className="comment">“{milkshake.comment}”</p>
+          <p className="comment">"{milkshake.comment}"</p>
         )}
       </div>
     </article>
