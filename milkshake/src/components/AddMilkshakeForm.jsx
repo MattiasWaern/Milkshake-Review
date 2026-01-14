@@ -1,72 +1,85 @@
-import { useState } from "react";
+import { useState } from 'react';
 import './AddMilkShakeForm.css';
 
-function AddMilkShakeForm({ onAdd}){
-    const [form, setForm] = useState({
-        name: '',
-        place: '',
-        rating: '',
-        comment: '',
-        imageUrl: ''
+const initialForm = {
+  name: '',
+  place: '',
+  rating: '',
+  comment: '',
+  imageUrl: ''
+};
+
+function AddMilkShakeForm({ onAdd }) {
+  const [form, setForm] = useState(initialForm);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!form.name || !form.place) return;
+
+    onAdd({
+      ...form,
+      rating: Number(form.rating)
     });
 
+    setForm(initialForm);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if(!form.name || !form.rating) return;
+  return (
+    <form className="add-form" onSubmit={handleSubmit}>
+      <h2>Lägg till milkshake</h2>
 
-        onAdd({
-            ...form,
-            rating: Number(form.rating),
-            date: new Date().toISOString().split('T')[0]
-        });
+      <input
+        name="name"
+        placeholder="Milkshake-namn"
+        value={form.name}
+        onChange={handleChange}
+        required
+      />
 
-        setForm({
-            name: '',
-            place: '',
-            rating: '',
-            comment: '',
-            imageUrl: ''
-        });
-    };
+      <input
+        name="place"
+        placeholder="Ställe"
+        value={form.place}
+        onChange={handleChange}
+        required
+      />
 
-    return (
-        <form className="add-form" onSubmit={handleSubmit}>
-            <h2>Lägg till ny Milkshake Review</h2>
-            <div className="form-grid">
-                <input
-                type="text"
-                placeholder="Milkshake-namn"
-                value={form.name}
-                onChange={e => setForm({...form, name: e.target.value})}
-                required
-                />
-                <input
-                type="number"
-                step="0.1"
-                min="0"
-                max="10"
-                placeholder="Betyg 0-10"
-                value={form.rating}
-                onChange={e => setForm({...form, rating: e.target.value})}
-                required
-                />
-                <input
-                type="url"
-                placeholder="Bild URL (valfritt)"
-                value={form.imageUrl}
-                onChange={e => setForm({...form, imageUrl: e.target.value})}
-                />
-            </div>
-            <textarea
-            placeholder="Vad tyckte ni?"
-            value={form.comment}
-            onChange={e => setForm({...form, comment: e.target.value})}
-            rows={3}
-            />
-            <button type="submit"> Spara milkshake</button>
-        </form>
-    );
+      <input
+        name="rating"
+        type="number"
+        min="0"
+        max="10"
+        step="0.1"
+        placeholder="Betyg (0–10)"
+        value={form.rating}
+        onChange={handleChange}
+        required
+      />
+
+      <input
+        name="imageUrl"
+        type="url"
+        placeholder="Bild-URL"
+        value={form.imageUrl}
+        onChange={handleChange}
+      />
+
+      <textarea
+        name="comment"
+        placeholder="Kommentar"
+        value={form.comment}
+        onChange={handleChange}
+      />
+
+      <button type="submit">Spara</button>
+    </form>
+  );
 }
 
 export default AddMilkShakeForm;
