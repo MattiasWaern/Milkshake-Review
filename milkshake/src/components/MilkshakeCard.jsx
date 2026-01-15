@@ -29,40 +29,37 @@ function MilkshakeCard({ milkshake, onToggleFavorite, onDelete, onUpdate }) {
     setEditForm(prev => ({...prev, [name]: value}));
   };
 
-if (isEditing) {
-  return(
-    <article className="milkshake-card editing">
-      <div className="edit-from">
-        <h3>Redigiera Recension</h3>
+  if (isEditing) {
+    return(
+      <article className="milkshake-card editing">
+        <div className="edit-form">  
+          <h3>Redigera Recension</h3> 
 
-        <input
-          name="name"
-          placeholder="Milkshake-namn"
-          value={editForm.name}
-          onChange={handleChange}
-        />
-
-        <input
-          name="rating"
-          type="number"
-          min="0"
-          max="10"
-          step="0.1"
-          placeholder="Betyg (0-10)"
-          value={editForm.rating}
-          onChange={handleChange}
+          <input
+            name="name"
+            placeholder="Milkshake-namn"
+            value={editForm.name}
+            onChange={handleChange}
           />
 
-          <select
+          <input
+            name="rating"  
+            type="number"
+            min="0"
+            max="10"
+            step="0.1"
+            placeholder="Betyg (0–10)"
+            value={editForm.rating}
+            onChange={handleChange}
+          />
+
+          <input
             name="price"
+            type="number"
+            placeholder="T.ex 50kr"
             value={editForm.price}
             onChange={handleChange}
-          >
-            <option value="">Inget Pris</option>
-            <option value="1">$ - Billigt (under 50 kr)</option>
-            <option value="2">$$ - Mellan  (50-80 kr)</option>
-            <option value="3">$$$ - Dyrt (över 80 kr)</option>
-          </select>
+          />
 
           <input
             name="imageUrl"
@@ -80,13 +77,13 @@ if (isEditing) {
           />
 
           <div className="edit-actions">
-            <button className="save-btn" onClick={handleSave}> Spara </button>
-            <button className="cancel-btn" onClick={() => setIsEditing(false)}> Avbryt </button>
+            <button className="save-btn" onClick={handleSave}>💾 Spara</button>  
+            <button className="cancel-btn" onClick={() => setIsEditing(false)}>❌ Avbryt</button>  
           </div>
-      </div>
-    </article>
-  );
-}
+        </div>
+      </article>
+    );
+  }
 
   return (
     <article className="milkshake-card">
@@ -98,13 +95,13 @@ if (isEditing) {
         {milkshake.favorite ? '⭐' : '☆'}
       </button>
 
-        {milkshake.imageUrl && (
-          <div className="card-image">
-            <img src={milkshake.imageUrl} alt={milkshake.name} loading="lazy" />
-          </div>
-        )}
+      {milkshake.imageUrl && (
+        <div className="card-image">
+          <img src={milkshake.imageUrl} alt={milkshake.name} loading="lazy" />
+        </div>
+      )}
 
-        <div className="card-content">
+      <div className="card-content">
         <h3>{milkshake.name}</h3>
         <div className="place">{milkshake.place}</div>
 
@@ -117,7 +114,7 @@ if (isEditing) {
           <strong>{milkshake.rating.toFixed(1)}</strong>
           <span className="stars">{starString}</span>
           {milkshake.price && (
-            <span className="price">{'€'.repeat(milkshake.price)}</span>
+            <span className="price">{milkshake.price} kr</span>  
           )}
         </div>
 

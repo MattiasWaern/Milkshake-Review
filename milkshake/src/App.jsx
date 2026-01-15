@@ -14,14 +14,32 @@ function App() {
       {
         ...milkshake,
         id: crypto.randomUUID(),
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        favorite: false
       }
     ]);
   };
 
+  const deleteMilkshake = (id) => {
+    setMilkshakes(prev => prev.filter(m => m.id !== id));
+  };
+
+  const updateMilkshake = (id, updatedData) => {
+    setMilkshakes(prev =>
+      prev.map(m => m.id === id ? { ...m, ...updatedData } : m)
+    );
+  };
+
+  const toggleFavorite = (id) => {
+    setMilkshakes(prev =>
+      prev.map(m =>
+        m.id === id ? { ...m, favorite: !m.favorite } : m
+      )
+    );
+  };
+
   const milkshakesByPlace = useMemo(() => {
     const groups = {};
-
     for (const m of milkshakes) {
       if (!groups[m.place]) groups[m.place] = [];
       groups[m.place].push(m);
@@ -29,7 +47,7 @@ function App() {
 
     return Object.entries(groups).map(([place, reviews]) => ({
       place,
-      reviews: reviews.sort((a, b) => b.date.localeCompare(a.date))
+      reviews
     }));
   }, [milkshakes]);
 
@@ -40,9 +58,8 @@ function App() {
 
   const sortedMilkshakes = useMemo(() => {
     if (!selectedPlace) return [];
-    
     const filtered = milkshakes.filter(m => m.place === selectedPlace);
-    
+
     if (sortBy === 'rating') {
       return [...filtered].sort((a, b) => b.rating - a.rating);
     }
@@ -53,10 +70,9 @@ function App() {
     <div className="app">
       <header>
         <div className="header-content">
-          <div className="logo">🥤</div>
           <div>
             <h1>Milkshake Reviews</h1>
-            <p>Din guide till de bästa milkshakesen</p>
+            <p>yummy yummy in my tummy</p>
           </div>
         </div>
       </header>
@@ -67,7 +83,14 @@ function App() {
 
           {milkshakesByPlace.length > 0 && (
             <>
-              <h2 className="section-title">Våra ställen ({milkshakesByPlace.length})</h2>
+              <h2 className="section-title">Våra ställen</h2>
+
+              <MapView
+                places={milkshakesByPlace}
+                onPlaceClick={setSelectedPlace}
+                averageRating={averageRating}
+              />
+
               <div className="places-grid">
                 {milkshakesByPlace.map(group => (
                   <button
@@ -78,30 +101,23 @@ function App() {
                     <div className="place-icon">📍</div>
                     <h3>{group.place}</h3>
                     <div className="place-stats">
-                      <span className="avg-rating">{averageRating(group.reviews)} ★</span>
-                      <span className="review-count">{group.reviews.length} recensioner</span>
+                      <span className="avg-rating">
+                        {averageRating(group.reviews)} ★
+                      </span>
+                      <span className="review-count">
+                        {group.reviews.length} recensioner
+                      </span>
                     </div>
                   </button>
                 ))}
               </div>
             </>
           )}
-
-          {milkshakesByPlace.length === 0 && (
-            <div className="empty-state">
-              <div className="empty-icon">🍓</div>
-              <h3>Inga recensioner än</h3>
-              <p>Bli den första att lägga till en milkshake-recension!</p>
-            </div>
-          )}
         </>
       ) : (
         <div className="place-detail-view">
           <div className="detail-header">
-            <button
-              className="back-button"
-              onClick={() => setSelectedPlace(null)}
-            >
+            <button className="back-button" onClick={() => setSelectedPlace(null)}>
               ← Tillbaka
             </button>
 
@@ -118,7 +134,13 @@ function App() {
 
           <div className="milkshake-grid">
             {sortedMilkshakes.map(m => (
-              <MilkshakeCard key={m.id} milkshake={m} />
+              <MilkshakeCard
+                key={m.id}
+                milkshake={m}
+                onToggleFavorite={toggleFavorite}
+                onDelete={deleteMilkshake}
+                onUpdate={updateMilkshake}
+              />
             ))}
           </div>
         </div>
