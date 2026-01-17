@@ -16,7 +16,7 @@ export default function StatsView({ reviews, reviewer, onBack }) {
         {topRated.map((r, i) => (
           <div key={r.id} style={{display: 'flex', justifyContent: 'space-between', padding: '10px', borderBottom: '1px solid #eee'}}>
             <span>#{i+1} {r.flavor} ({r.place}) {r.reviewer}</span>
-            <span style={{fontWeight: 'bold'}}>{r.rating} ⭐</span>
+            <span style={{fontWeight: 'bold'}}> {r.rating}/5 ⭐</span>
           </div>
         ))}
       </div>
