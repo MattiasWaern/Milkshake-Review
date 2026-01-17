@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, X, Trophy, Download, ChevronRight, ChevronDown, MapPin } from 'lucide-react';
+import { Plus, X, Trophy, Download, ChevronRight, ChevronDown, MapPin, Star } from 'lucide-react';
 import './styles/App.css';
 import ReviewCard from './components/ui/ReviewCard';
 import StatsView from './components/views/StatsView';
@@ -119,6 +119,27 @@ export default function MilkshakeReviews() {
       </div>
     </div>
 
+      <div style={{ marginBottom: '1.5rem', textAlign: 'center', background: '#fdf2f8', padding: '15px', borderRadius: '12px' }}>
+        <p style={{ fontSize: '0.85rem', color: 'var(--gray-600)', marginBottom: '8px', fontWeight: 'bold' }}>Betyg</p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+            key={star}
+            type="button"
+            onClick={() => setFormData({...formData, rating: star})}
+            style={{background: 'none', border: 'none', cursor: 'pointer'}}
+            >
+            <Star
+            size={32}
+            fill={star <= formData.rating ? "#fbbf24" : "none"}
+            color={star <= formData.rating ? "#fbbf24" : "#d1d5db"}
+            />
+            </button>
+          ))}
+        </div>
+      </div>
+
+
     <div className="input-row">
       <input 
         placeholder="Smak" 
@@ -131,15 +152,15 @@ export default function MilkshakeReviews() {
         onChange={e => setFormData({...formData, date: e.target.value})} 
       />
        <input 
-        placeholder="Pris t.ex 67" 
         type="number"
+        placeholder="Pris (kr)" 
         value={formData.price} 
         onChange={e => setFormData({...formData, price: e.target.value})} 
       />
     </div>
 
     <textarea 
-      placeholder="Hur smakade den? (t.ex. krämig, för mycket grädde...)" 
+      placeholder="Hur smakade den? Recensionen" 
       rows="3" 
       value={formData.review} 
       onChange={e => setFormData({...formData, review: e.target.value})} 
