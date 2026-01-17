@@ -1,9 +1,10 @@
 import React from 'react';
 import { ArrowLeft, Trophy, Heart } from 'lucide-react';
 
-export default function StatsView({ reviews, onBack }) {
+export default function StatsView({ reviews, reviewer, onBack }) {
   const topRated = [...reviews].sort((a, b) => b.rating - a.rating).slice(0, 5);
   const favorites = reviews.filter(r => r.favorite);
+ 
 
   return (
     <div className="container">
@@ -14,7 +15,7 @@ export default function StatsView({ reviews, onBack }) {
         <h2 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><Trophy color="#fbbf24"/> Topp 5</h2>
         {topRated.map((r, i) => (
           <div key={r.id} style={{display: 'flex', justifyContent: 'space-between', padding: '10px', borderBottom: '1px solid #eee'}}>
-            <span>#{i+1} {r.flavor} ({r.place})</span>
+            <span>#{i+1} {r.flavor} ({r.place}) {r.reviewer}</span>
             <span style={{fontWeight: 'bold'}}>{r.rating} ⭐</span>
           </div>
         ))}
