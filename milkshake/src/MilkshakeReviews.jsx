@@ -41,16 +41,20 @@ export default function MilkshakeReviews() {
   const handleSave = () => {
     if (!formData.place || !formData.flavor) return alert("Fyll i ställe och smak!");
 
-    const newReview = { ...formData, id: Date.now().toString(), favorite: false };
-    const reviewId = editingId || Date.now().toString();
+    const idToUse = editingId || Date.now().toString();
+
+    const reviewData = {
+      ...formData,
+      id: idToUse
+    };
 
     try {
-    localStorage.setItem(`review:${newReview.id}`, JSON.stringify(newReview));
+    localStorage.setItem(`review:${idToUse}`, JSON.stringify(reviewData));
 
       if(editingId){
-        setReviews(reviews.map(r => r.id === editingId ? newReview : r));
+        setReviews(reviews.map(r => r.id === editingId ? reviewData : r));
       } else {
-        setReviews([newReview, ...reviews]);
+        setReviews([reviewData, ...reviews]);
       }
 
     setShowForm(false);
