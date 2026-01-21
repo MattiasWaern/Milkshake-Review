@@ -32,23 +32,26 @@ export default function MilkshakeReviews() {
 
   // Gruppera recensioner efter ställe
   const groupedReviews = reviews.reduce((acc, review) => {
-    const normalizedPlace = review.place.trim().charAt(0).toUpperCase() + review.place.trim().slice(1).toLowerCase();
+  const normalizedPlace = review.place.trim().charAt(0).toUpperCase() + review.place.trim().slice(1).toLowerCase();
+  const normalizedLocation = review.location.trim().charAt(0).toUpperCase() + review.location.trim().slice(1).toLowerCase();
 
     if(!acc[normalizedPlace]) acc[normalizedPlace] = [];
     acc[normalizedPlace].push(review);
+  
     return acc;
-
   }, {});
 
   const handleSave = () => {
-    if (!formData.place || !formData.flavor) return alert("Fyll i ställe och smak!");
+    if (!formData.place || !formData.flavor || !formData.location) return alert("Fyll i ställe, smak & plats!");
 
     const formattedPlace = formData.place.trim().charAt(0).toUpperCase()+formData.place.trim().slice(1).toLowerCase();
+    const formattedLocation = formData.location.trim().charAt(0).toUpperCase()+formData.location.trim().slice(1).toLowerCase();
     
     const idToUse = editingId || Date.now().toString();
     const reviewData = {
       ...formData,
       place: formattedPlace,
+      location: formattedLocation,
       id: idToUse
     };
 

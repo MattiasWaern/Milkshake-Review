@@ -36,7 +36,8 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
         
           
           
-          {review.rating === 5 && <Badge variant="top">Toppklass 🏆</Badge>}
+          {review.rating === 5 && <Badge variant="top"> Banger Shake 🏆</Badge>}
+          {review.rating === 1 && <Badge variant="dogshit"> Dogshit Shake </Badge>}
         </div>
 
         
