@@ -202,7 +202,7 @@ const handleEdit = (review) => {
   </div>
 )}
 
-        {/* Grupperad lista */}
+        {/* Grupperad lista */} 
         <div className="places-list" style={{ marginTop: '2rem' }}>
           {Object.keys(groupedReviews).map(placeName => (
             <div key={placeName} className="place-group" style={{ marginBottom: '1rem' }}>
