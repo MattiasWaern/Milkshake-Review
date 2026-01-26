@@ -4,9 +4,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
-
 const milkshakePlaces = [
-    {name: "DirtyCoco", coords: [59.3293, 18.0686] },
+    { name: "DirtyCoco", coords: [18.0686, 59.3293] }, // lng, lat
 ];
 
 export default function MilkshakeMap() {
@@ -20,32 +19,35 @@ export default function MilkshakeMap() {
         .catch(err => console.error(err));
     }, []);
 
- 
     useEffect(() => {
         if (mapRef.current) return;
 
         mapRef.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v12",
-            center: [18.0686, 59.3293],
+            center: [18.0686, 59.3293], // lng, lat
             zoom: 13
         });
 
-        milkshakePlaces.forEach(place => {
-            new mapboxgl.Marker()
-            .setLngLat(place.coords)
-            .setPopup(new mapboxgl.Popup().setText(place.name))
-            .addTo(mapRef.current);
+        mapRef.current.on("load", () => {
+            mapRef.current.resize(); 
+
+            // lägg markörer här
+            milkshakePlaces.forEach(place => {
+                new mapboxgl.Marker()
+                    .setLngLat(place.coords)
+                    .setPopup(new mapboxgl.Popup().setText(place.name))
+                    .addTo(mapRef.current);
+            });
         });
 
         return () => mapRef.current?.remove();
     }, []);
 
-
     return (
         <div
             ref={mapContainer}
-            style={{width: '100%', height: '100vh'}}
+            style={{ width: "100%", height: "100vh" }}
         />
     );
 }

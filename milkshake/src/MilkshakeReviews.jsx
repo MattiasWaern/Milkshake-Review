@@ -3,6 +3,7 @@ import { Plus, X, Trophy, Download, ChevronRight, ChevronDown, MapPin, Star } fr
 import './styles/App.css';
 import ReviewCard from './components/ui/ReviewCard';
 import StatsView from './components/views/StatsView';
+import MilkshakeMap  from './components/views/MilkShakeMap';
 import Rating from '@mui/material/Rating';
 
 export default function MilkshakeReviews() {
@@ -98,6 +99,8 @@ const handleEdit = (review) => {
 
   if (currentView === 'stats') return <StatsView reviews={reviews} onBack={() => setCurrentView('places')} />;
 
+  if (currentView ==='map') return <MilkshakeMap onBack={(() => setCurrentView('places'))} />;
+
   return (
     <div className="main-layout">
       <header className="header">
@@ -115,8 +118,22 @@ const handleEdit = (review) => {
 
       <main className="container">
         <div className="stats-grid">
-          <div className="stat-box pink"><strong>{reviews.length}</strong><br/>Recensioner</div>
-          <button className="btn btn-outline" onClick={() => setCurrentView('stats')}><Trophy size={16}/> Stats</button>
+          <div className="stat-box pink">
+            <strong>{reviews.length}</strong><br/>Recensioner
+            </div>
+            
+          <button 
+          className="btn btn-outline" 
+          onClick={() => setCurrentView('stats')}>
+          <Trophy size={16}/> Stats
+          </button>
+
+          <button 
+          className="btn btn-outline"
+          onClick={()=> setCurrentView('map')}
+          >
+          <MapPin size={16}/> Karta
+          </button>
         </div>
 
         {showForm && (
