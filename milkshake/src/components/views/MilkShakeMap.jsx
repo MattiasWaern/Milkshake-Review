@@ -5,7 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 const milkshakePlaces = [
-    { name: "DirtyCoco", coords: [18.0686, 59.3293] }, // lng, lat
+    { name: "DirtyCoco", coords: [18.0686, 59.3293] }, // lng, lat // inte rätt koordinater för stället xd
 ];
 
 export default function MilkshakeMap() {
