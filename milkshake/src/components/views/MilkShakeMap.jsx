@@ -31,7 +31,7 @@ export default function MilkshakeMap() {
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v12",
             center: [18.0686, 59.3293], // lng, lat
-            zoom: 13
+            zoom: 10
         });
 
         mapRef.current.on("load", () => {
