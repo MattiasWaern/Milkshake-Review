@@ -16,7 +16,7 @@ export default function MilkshakeMap({ onBack, reviews }) {
         // Skapa kartan
         mapRef.current = new mapboxgl.Map({
             container: mapContainer.current,
-            style: "mapbox://styles/mapbox/light-v11",
+            style: "mapbox://styles/mapbox/streets-v12",
             center: [18.0686, 59.3293], 
             zoom: 9
         });
