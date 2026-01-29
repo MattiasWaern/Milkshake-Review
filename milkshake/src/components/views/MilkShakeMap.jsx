@@ -93,7 +93,7 @@ export default function MilkshakeMap({ onBack, reviews }) {
         setLoadingProgress(Math.round(((i + 1) / uniquePlaces.length) * 100))
 
         // Viktigt: Max 1 request per sekund för Nominatim
-        await new Promise(resolve => setTimeout(resolve, 1100));
+        await new Promise(resolve => setTimeout(resolve, 100));
     }
     setLoading(false);
 };
@@ -184,8 +184,8 @@ export default function MilkshakeMap({ onBack, reviews }) {
                                 className="animate-spin" 
                                 size={48} 
                                 style={{ 
-                                    color: '#9333ea',
-                                    margin: '0 auto 1rem'
+                                color: '#9333ea',
+                                margin: '0 auto 1rem'
                                 }} 
                             />
                             <p style={{
