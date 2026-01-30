@@ -49,7 +49,7 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
           </Badge>
 
           <Badge>
-            <MapPin size={12} style={{marginRight: '4px'}}/> {review.location}
+            <MapPin size={12} style={{marginRight: '4px'}}/> {review.location} 📍
           </Badge>
 
           <Badge>

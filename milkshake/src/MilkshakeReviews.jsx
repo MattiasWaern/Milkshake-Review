@@ -124,11 +124,14 @@ const handleEdit = (review) => {
               <div className="stat-box pink">
                 <strong>{reviews.length}</strong><br/>Recensioner
               </div>
-              <div className="stat-box pink">
+              <div className="stat-box purple">
                 <strong>{reviews.length > 0 ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1) : 0}</strong><br/>Snittbetyg
               </div>
-              <div className="stat-box pink">
-                <strong>{new Set(reviews.map(r => r.place)).size}</strong><br/>Ställen
+              <div className="stat-box blue">
+                <strong>{new Set(reviews.map(r => r.place)).size}</strong><br/>Ställen 
+              </div>
+               <div className="stat-box green">
+                <strong>{new Set(reviews.map(r => r.place)).size}</strong><br/>Snittkostnad
               </div>
               
               {/* Navigationslänkar */}

@@ -11,6 +11,10 @@
   --radius: 16px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
@@ -18,7 +22,9 @@ body {
   color: var(--text-dark);
 }
 
-.main-layout { min-height: 100vh; }
+.main-layout { 
+  min-height: 100vh; 
+}
 
 .header {
   background: var(--white);
@@ -30,11 +36,12 @@ body {
 }
 
 .header-content {
-  max-width: 100vh;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 1rem;
 }
 
 .header-titles {
@@ -42,25 +49,28 @@ body {
   flex-direction: column;
 }
 
-.header-content button{
-  font-size: .8rem;
+.header-content button {
+  font-size: 0.8rem;
   font-weight: 600;
   margin-top: 1.2rem;
+  white-space: nowrap;
 }
 
-.header-content h1{
+.header-content h1 {
   font-size: 2rem;
   font-weight: 800;
   margin: 0;
+  line-height: 1.2;
 }
 
 .title-gradient {
   background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 2rem;
   font-weight: 800;
   margin: 0;
-  color: white;
 }
 
 .container {
@@ -78,10 +88,27 @@ body {
 }
 
 .review-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  display: flex;
+  overflow-x: auto;
   gap: 1.5rem;
   margin-top: 2rem;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.review-grid > * {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+}
+
+/* Dölj scrollbar men behåll funktionalitet */
+.review-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.review-grid::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
 }
 
 /* Stat Boxes */
@@ -89,6 +116,13 @@ body {
   padding: 1rem;
   border-radius: 12px;
   text-align: center;
+  font-size: 0.9rem;
+}
+
+.stat-box strong {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .stat-box.pink { background: #fce7f3; color: #9d174d; }
@@ -105,13 +139,24 @@ body {
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   transition: 0.2s;
 }
 
-.btn-primary { background: linear-gradient(to right, var(--primary), var(--secondary)); color: white; }
-.btn-outline { background: white; border: 1px solid #ddd; }
-.btn-outline:hover { background: #f9fafb; }
+.btn-primary { 
+  background: linear-gradient(to right, var(--primary), var(--secondary)); 
+  color: white; 
+}
+
+.btn-outline { 
+  background: white; 
+  border: 1px solid #ddd; 
+}
+
+.btn-outline:hover { 
+  background: #f9fafb; 
+}
 
 /* Form */
 .form-card {
@@ -122,13 +167,19 @@ body {
   margin-bottom: 2rem;
 }
 
-.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.input-row { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 1rem; 
+  margin-bottom: 1rem; 
+}
+
 input, select, textarea {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-sizing: border-box;
+  font-size: 1rem;
 }
 
 .place-header-btn {
@@ -156,4 +207,109 @@ input, select, textarea {
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: bold;
+}
+
+/* Media queries */
+
+/* T(under 900px) */
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .review-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* (under 640px) */
+@media (max-width: 640px) {
+  .header {
+    padding: 1rem;
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-content button {
+    font-size: 0.75rem;
+    padding: 0.6rem 1rem;
+    margin-top: 0.8rem;
+  }
+  
+  .container {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .stat-box {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .stat-box strong {
+    font-size: 1.25rem;
+  }
+  
+  .form-card {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+  }
+  
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .review-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .place-header-btn {
+    padding: 1rem;
+  }
+  
+  .place-header-btn span {
+    font-size: 1rem;
+  }
+  
+  .btn {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+  }
+}
+
+/* (under 400px) */
+@media (max-width: 400px) {
+  .header-content h1 {
+    font-size: 1.25rem;
+  }
+  
+  .header-content button {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .stats-grid {
+    gap: 0.4rem;
+  }
+  
+  .stat-box {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.75rem;
+  }
+  
+  .stat-box strong {
+    font-size: 1.1rem;
+  }
 }
