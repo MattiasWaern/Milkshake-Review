@@ -255,6 +255,6 @@ const handleEdit = (review) => {
         <Route path="/map" element={<MilkshakeMap reviews={reviews} onBack={() => window.history.back()} />} />
       </Routes>
     </div>
-  </HashRouter>
+    </HashRouter>
   );
 }
