@@ -7,6 +7,7 @@ import StatsView from './components/views/StatsView';
 import MilkshakeMap  from './components/views/MilkShakeMap';
 import Rating from '@mui/material/Rating';
 
+
 export default function MilkshakeReviews() {
   const [reviews, setReviews] = useState([]);
   const [currentView, setCurrentView] = useState('places');
