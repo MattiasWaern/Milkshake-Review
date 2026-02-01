@@ -9,7 +9,7 @@ export default function StatsView({ reviews, reviewer, onBack }) {
   return (
     <div className="container">
       <button onClick={onBack} className="btn btn-outline" style={{marginBottom: '1rem'}}><ArrowLeft size={18}/> Tillbaka</button>
-      <h1 className="title-gradient">📊 Statistik & Topplistor</h1>
+      <h1 className="title-gradient"> Statistik & Topplistor</h1>
       
       <div className="form-card" style={{marginTop: '2rem'}}>
         <h2 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><Trophy color="#fbbf24"/> Topp 5</h2>
@@ -23,8 +23,8 @@ export default function StatsView({ reviews, reviewer, onBack }) {
 
       {favorites.length > 0 && (
         <div className="form-card">
-          <h2 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><Heart color="#ef4444" fill="#ef4444"/> Favoriter</h2>
-          <div className="review-grid">
+          <h2 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><Heart color="#ef4444" fill="#ef4444"/>Dina personliga <strong>Favoriter</strong></h2>
+          <div className="review-grid-favorites">
             {favorites.map(r => <div key={r.id} style={{padding: '10px', background: '#fff1f2', borderRadius: '8px'}}>{r.flavor} - {r.place}</div>)}
           </div>
         </div>
