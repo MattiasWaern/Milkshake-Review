@@ -59,7 +59,7 @@ State hanteras lokalt med React hooks (`useState`, `useEffect`). Alla recensione
 
 ### 🌍 Val av API
 
-Mapbox används för kartvisualisering på grund av dess prestanda och flexibilitet, medan OpenStreetMap Nominatim används för geokodning eftersom det är ett öppet och gratis alternativ. Kombinationen ger en bra kartlösning utan behov av egen backend. Jag tänkte först bara använda mig av Mapbox, men fick reda på rätt så sent i utvecklingen att dom inte är jätte starka på att hitta specifika POI's som resturanger o café... :(
+Mapbox används för kartvisualisering på grund av dess prestanda och flexibilitet, medan OpenStreetMap Nominatim används för geokodning eftersom det är ett öppet och gratis alternativ, kombinationen ger en bra kartlösning. Jag tänkte först bara använda mig av Mapbox, men fick reda på rätt så sent i utvecklingen att dom inte är jätte starka på att hitta specifika POI's som resturanger o café... :(
 
 ---
 
