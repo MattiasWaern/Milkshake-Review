@@ -165,5 +165,3 @@ Ett hobby-/portfolio/skolprojekt-projekt byggt med fokus på:
 * praktisk frontend-arkitektur
 
 ---
-
-Feel free to fork, testa eller bygga vidare!
