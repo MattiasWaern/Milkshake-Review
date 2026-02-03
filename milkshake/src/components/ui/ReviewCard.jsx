@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star, Heart, Pencil, MapPin, Calendar, User, X } from 'lucide-react';
 import Badge from './Badge';
+import { Link } from 'react-router-dom';
 
 export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit }) {
   return (
@@ -67,6 +68,10 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
         <p style={{fontSize: '0.95rem', lineHeight: '1.5', marginTop: '1.2rem', color: '#374151', fontStyle: review.review ? 'normal' : 'italic'}}>
           {review.review || "Inget omdöme skrivet..."}
         </p>
+
+        <Link to={`/review/${review.id}`} className="btn btn-outline" style={{ marginTop: '10px', fontSize: '0.8rem' }}>
+          Läs mer / Detaljer
+        </Link>
       </div>
     </div>
   );

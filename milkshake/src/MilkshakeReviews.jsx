@@ -255,7 +255,7 @@ const handleEdit = (review) => {
         
         <Route path="/stats" element={<StatsView reviews={reviews} onBack={() => window.history.back()} />} />
         <Route path="/map" element={<MilkshakeMap reviews={reviews} onBack={() => window.history.back()} />} />
-
+        <Route path="/review/:id" element={<ReviewDetail reviews={reviews} />} />
 
 
       </Routes>
@@ -279,7 +279,7 @@ function ReviewDetail({reviews}) {
   }
 
   return (
-    <div className="container" style={{padding: '2rem 1rem'}}>
+    <main className="container" style={{padding: '2rem 1rem'}}>
       <Link to="/" className="btn btn-outline" style={{marginBottom: '2rem', display: 'inline-flex', alignItems: 'center', gap: '8px'}}>
         Tillbaka till listan
       </Link>
@@ -293,7 +293,20 @@ function ReviewDetail({reviews}) {
         />
       </div>
 
-      
-    </div>
+      <div className="card" style={{ marginTop: '1.5rem', padding: '2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
+          <h3 style={{ marginBottom: '1rem', color: 'var(--pink-600)' }}>Fullständig recension</h3>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: '#374151', fontStyle: 'italic' }}>
+            "{review.review || "Ingen skriven text för denna recension än."}"
+          </p>
+          <hr style={{ margin: '1.5rem 0', border: '0', borderTop: '1px solid #f3f4f6' }} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.9rem', color: '#6b7280' }}>
+            <div><strong>Datum:</strong> {review.date}</div>
+            <div><strong>Pris:</strong> {review.price} kr</div>
+            <div><strong>Recensent:</strong> {review.reviewer}</div>
+            <div><strong>Plats:</strong> {review.location}</div>
+          </div>
+        </div>
+
+    </main>
   )
 }
