@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import MilkshakeReviews from './MilkshakeReviews.jsx' 
+import App from './App.jsx' 
+import { HashRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+<HashRouter>
   <React.StrictMode>
-      <MilkshakeReviews />
+      <App />
   </React.StrictMode>,
+</HashRouter>
 )
