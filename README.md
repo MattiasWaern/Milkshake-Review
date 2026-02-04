@@ -1,6 +1,6 @@
 # 🥤 Milkshake Reviews
 
-Ett personligt och ett skolprojekt där jag skapade mitt första React-projekt, där projektet handlar om att kunna recensera milkshakes 🍓🥛
+Ett personligt/skolprojekt där jag skapade mitt första React-projekt, där projektet handlar om att kunna recensera milkshakes 🍓🥛
 
 Appen låter dig spara, betygsätta och jämföra milkshakes från olika ställen, se statistik över dina recensioner och visualisera alla platser på en interaktiv karta.
 
@@ -9,6 +9,7 @@ Appen låter dig spara, betygsätta och jämföra milkshakes från olika ställe
 ## ✨ Funktioner
 
 * ➕ Skapa, redigera och ta bort milkshake-recensioner
+* 🔍 Detaljvy: Varje recension har en unik sida med djuplodande information.
 * ⭐ Sätt betyg (1–5 stjärnor) med Material UI Rating
 * ❤️ Markera favoriter
 * 🏆 Automatiska badges (t.ex. *Banger Shake* vid 5⭐)
@@ -24,6 +25,7 @@ Appen låter dig spara, betygsätta och jämföra milkshakes från olika ställe
 
 * ✅ React-applikation byggd med komponenter
 * ✅ Använder `react-router-dom` för routing mellan vyer
+* ✅ Dynamisk routing, använder :id och useParams för specifika recensionssidor
 * ✅ State-hantering med React hooks (`useState`, `useEffect`)
 * ✅ Data sparas lokalt med `localStorage`, kommer koppla upp datan till en databas i framtiden.
 * ✅ Interaktion med externt API (Mapbox + OpenStreetMap Nominatim)
@@ -45,6 +47,8 @@ Projektet är uppdelat i `components/ui` och `components/pages` för att skilja 
 
 Routing hanteras med `react-router-dom` och `HashRouter`, vilket gör att applikationen fungerar korrekt även vid deployment till t.ex. GitHub Pages. Varje huvudvy (startsida, statistik, karta) har en egen route, vilket ger en tydlig navigation och bättre separation mellan vyer.
 
+För att nå VG-kravet har jag implementerat dynamisk routing. Genom att använda :id i routen och hooken useParams i komponenten ReviewDetail, kan appen dynamiskt visa rätt recension baserat på URL:en. Detta skapar en mer professionell SPA-upplevelse där varje milkshake har sin egen unika länk.
+
 ### 🧩 Komponentindelning
 
 Varje komponent har ett tydligt ansvar. Exempelvis ansvarar `ReviewCard` endast för presentation och användarinteraktion, medan huvudkomponenten hanterar state, logik och datalagring. Detta följer principen om "single responsibility" och gör komponenterna enklare att testa och underhålla.
@@ -56,6 +60,9 @@ Data och callbacks skickas ner via props från föräldrakomponenter till barnko
 ### 🧠 State-lösning
 
 State hanteras lokalt med React hooks (`useState`, `useEffect`). Alla recensioner lagras i `localStorage`, vilket gör att applikationen inte är beroende av en backend men ändå kan behålla data mellan omladdningar. Vid ändringar synkas state och `localStorage` för att hålla datan konsekvent.
+
+### 🛠️ Problemlösning: React 19 & Hooks
+Under projektets gång stötte jag på utmaningar med versionskonflikter mellan React 19 och react-router-dom, vilket resulterade i felet "Invalid hook call". Jag löste detta genom en grundlig omstrukturering av package.json där jag använde overrides för att tvinga projektet att använda en enhetlig React-instans, samt flyttade routerns placering för att garantera att kontexten fanns tillgänglig för alla hooks.
 
 ### 🌍 Val av API
 
@@ -127,14 +134,18 @@ src/
 ├─ components/
 │  ├─ ui/
 │  │  ├─ ReviewCard.jsx
+│  │  ├─ ReviewDetail.jsx
+│  │  ├─ StatsCard.jsx ingen kod finns där just nu.
 │  │  └─ Badge.jsx
 │  └─ pages/
 │     ├─ StatsView.jsx
-│     └─ MilkshakeMap.jsx
+│     ├─ MilkshakeMap.jsx
+│     └─ PhotoAlbum.jsx ingen kod finns där just nu.
 ├─ styles/
 │  └─ App.css
 ├─ App.jsx
 └─ main.jsx
+
 ```
 
 ---
