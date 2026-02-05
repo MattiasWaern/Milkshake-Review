@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import ReviewCard from '../ui/ReviewCard'; // Justera sökvägen om det behövs
+import ReviewCard from '../ui/ReviewCard'; 
 
 export default function PlaceDetail({ reviews }) {
   const { id } = useParams();
