@@ -80,7 +80,6 @@ export default function MilkshakeMap({ onBack, reviews }) {
                 const coords = [parseFloat(data[0].lon), parseFloat(data[0].lat)];
                 
                 console.log(`Placerar ${placeString} på:`, coords);
-                console.log(`Platsbeskrivning: ${data[0].display_name}`);
 
                 const placeName = placeString.split(',')[0].trim();
                 const relevantReviews = reviews.filter(r => r.place.trim() === placeName);
