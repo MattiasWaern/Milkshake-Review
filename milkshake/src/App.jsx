@@ -22,24 +22,24 @@ export default function App() {
     date: new Date().toISOString().split('T')[0], review: '', reviewer: ''
   });
 
- useEffect(() => {
-  const reviewsCollection = collection(db, "reviews");
+useEffect(() => {
+    const reviewsCollection = collection(db, "reviews");
 
-  const unsubscribe = onSnapshot(reviewsCollection, (snapshot) => {
-    const firebaseReviews = snapshot.docs.map(doc => ({
-      ...doc.data(),
-      id: doc.id 
-    }));
+    const unsubscribe = onSnapshot(reviewsCollection, (snapshot) => {
+      const firebaseReviews = snapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id 
+      }));
 
-    const sortedReviews = firebaseReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
-    setReviews(sortedReviews);
-  }, (error) => {
-    console.error("Error fetching reviews: ", error);
-  });
-  
-  return () => unsubscribe();
+      const sortedReviews = firebaseReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setReviews(sortedReviews);
+    }, (error) => {
+      console.error("Error fetching reviews: ", error);
+    });
 
- }, []);
+    // Cleanup: Stäng av lyssnaren när komponenten tas bort
+    return () => unsubscribe();
+  }, []);
 
   // Gruppera recensioner efter ställe
   const groupedReviews = reviews.reduce((acc, review) => {
@@ -55,32 +55,31 @@ export default function App() {
   const handleSave = async () => {
     if (!formData.place || !formData.flavor || !formData.location) return alert("Fyll i ställe, smak & plats!");
 
-    const formattedPlace = formData.place.trim().charAt(0).toUpperCase()+formData.place.trim().slice(1).toLowerCase();
-    const formattedLocation = formData.location.trim().charAt(0).toUpperCase()+formData.location.trim().slice(1).toLowerCase();
+    const formattedPlace = formData.place.trim().charAt(0).toUpperCase() + formData.place.trim().slice(1).toLowerCase();
+    const formattedLocation = formData.location.trim().charAt(0).toUpperCase() + formData.location.trim().slice(1).toLowerCase();
     
-    const idToUse = editingId || Date.now().toString();
     const reviewData = {
       ...formData,
       place: formattedPlace,
       location: formattedLocation,
-
     };
 
     try {
-    await addDoc(collection(db, "reviews"), reviewData);
-
-      if(editingId){
+      if (editingId) {
         const reviewRef = doc(db, "reviews", editingId);
         await updateDoc(reviewRef, reviewData);
+        console.log("Recension uppdaterad!");
       } else {
         await addDoc(collection(db, "reviews"), reviewData);
+        console.log("Ny recension sparad!");
       }
 
-    setShowForm(false);
-    SetEditingId(null);
-    setFormData({ place: '', location: '', flavor: '', rating: 5, price: '', date: new Date().toISOString().split('T')[0], review: '', reviewer: '' });
-    } catch (e) {console.error(e); }
-
+      setShowForm(false);
+      SetEditingId(null);
+      setFormData({ place: '', location: '', flavor: '', rating: 5, price: '', date: new Date().toISOString().split('T')[0], review: '', reviewer: '' });
+    } catch (e) {
+      console.error("Error saving: ", e);
+    }
   };
 
   const deleteReview = async  (id) => {
