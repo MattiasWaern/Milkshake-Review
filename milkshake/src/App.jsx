@@ -63,16 +63,17 @@ export default function App() {
       ...formData,
       place: formattedPlace,
       location: formattedLocation,
-      id: idToUse
+
     };
 
     try {
     await addDoc(collection(db, "reviews"), reviewData);
 
       if(editingId){
-        setReviews(reviews.map(r => r.id === editingId ? reviewData : r));
+        const reviewRef = doc(db, "reviews", editingId);
+        await updateDoc(reviewRef, reviewData);
       } else {
-        setReviews([reviewData, ...reviews]);
+        await addDoc(collection(db, "reviews"), reviewData);
       }
 
     setShowForm(false);
