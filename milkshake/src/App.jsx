@@ -83,21 +83,23 @@ export default function App() {
 
   };
 
-  const deleteReview = (id) => {
-    localStorage.removeItem(`review:${id}`);
-    setReviews(reviews.filter(x => x.id !== id));
+  const deleteReview = async  (id) => {
+    try {
+      await deleteDoc(doc(db, "reviews", id));
+    } catch (e) {
+      console.error("Error deleting review: ", e);
+    }
   };
 
-  const toggleFavorite = (id) => {
-    const updated = reviews.map(r => {
-      if (r.id === id) {
-        const newR = { ...r, favorite: !r.favorite };
-        localStorage.setItem(`review:${id}`, JSON.stringify(newR));
-        return newR;
-      }
-      return r;
-    });
-    setReviews(updated);
+  const toggleFavorite = async (id) => {
+    const reviewToUpdate = reviews.find(r => r.id === id);
+    if (!reviewToUpdate) return;
+    try {
+      const reviewRef = doc(db, "reviews", id);
+      await updateDoc(reviewRef, { favorite: !reviewToUpdate.favorite });
+    } catch (e) {
+      console.error("Error toggling favorite: ", e);
+    }
   };
 
 const handleEdit = (review) => {
