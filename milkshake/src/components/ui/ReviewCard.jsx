@@ -1,7 +1,8 @@
 import React from 'react';
-import { Star, Heart, Pencil, MapPin, Calendar, User, X } from 'lucide-react';
+import { Heart, Pencil, MapPin, Calendar, User, X } from 'lucide-react';
 import Badge from './Badge';
 import { Link } from 'react-router-dom';
+import Rating from '@mui/material/Rating'; 
 
 export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit }) {
   return (
@@ -29,22 +30,19 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
         </div>
 
         <div style={{display: 'flex', margin: '0.6rem 0', alignItems: 'center', gap: '8px'}}>
-          <div style={{display: 'flex'}}>
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={16} fill={i < review.rating ? "#fbbf24" : "none"} color={i < review.rating ? "#fbbf24" : "#d1d5db"} />
-            ))}
-          </div>
+          <Rating 
+            value={review.rating} 
+            precision={0.5} 
+            readOnly 
+            size="small" 
+            sx={{ color: '#fbbf24' }} 
+          />
         
-          
-          
-          {review.rating === 5 && <Badge variant="top"> Banger Shake 🏆</Badge>}
-          {review.rating === 1 && <Badge variant="dogshit"> Dogshit Shake </Badge>}
+          {review.rating >= 4.5 && <Badge variant="top"> Banger Shake 🏆</Badge>}
+          {review.rating <= 1.5 && <Badge variant="dogshit"> Dogshit Shake </Badge>}
         </div>
 
-        
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '1rem'}}>
-          
-         
           <Badge variant={review.reviewer.toLowerCase()}>
             <User size={12} style={{marginRight: '4px'}}/> {review.reviewer}
           </Badge>
@@ -69,7 +67,7 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
           {review.review || "Inget omdöme skrivet..."}
         </p>
 
-        <Link to={`/review/${review.id}`} className="btn btn-outline" style={{ marginTop: '10px', fontSize: '0.8rem' }}>
+        <Link to={`/review/${review.id}`} className="btn btn-outline" style={{ display: 'inline-block', marginTop: '10px', fontSize: '0.8rem', textDecoration: 'none' }}>
           Läs mer / Detaljer
         </Link>
       </div>

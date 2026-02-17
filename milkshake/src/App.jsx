@@ -190,6 +190,7 @@ const handleEdit = (review) => {
                   <Rating
                     name="milkshake-rating"
                     value={formData.rating}
+                    precision={0.5}
                     size="large"
                     onChange={(event, newValue) => setFormData({...formData, rating: newValue})}
                   />
