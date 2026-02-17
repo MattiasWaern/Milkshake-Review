@@ -90,15 +90,16 @@ useEffect(() => {
     }
   };
 
-  const toggleFavorite = async (id) => {
-    const reviewToUpdate = reviews.find(r => r.id === id);
-    if (!reviewToUpdate) return;
-    try {
-      const reviewRef = doc(db, "reviews", id);
-      await updateDoc(reviewRef, { favorite: !reviewToUpdate.favorite });
-    } catch (e) {
-      console.error("Error toggling favorite: ", e);
-    }
+  const toggleFavorite = (id) => {
+    const updated = reviews.map(r => {
+      if (r.id === id) {
+        const newR = { ...r, favorite: !r.favorite };
+        localStorage.setItem(`review:${id}`, JSON.stringify(newR));
+        return newR;
+      }
+      return r;
+    });
+    setReviews(updated);
   };
 
 const handleEdit = (review) => {
