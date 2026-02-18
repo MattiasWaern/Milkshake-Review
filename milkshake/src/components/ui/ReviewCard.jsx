@@ -140,13 +140,13 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', gap: '2px' }}>
             {[1, 2, 3, 4, 5].map(i => (
-              <Star
-                key={i}
-                size={16}
-                fill={i <= review.rating ? '#ff80bf' : 'none'}
-                color={i <= review.rating ? '#ff80bf' : '#e0c0d0'}
-                style={{ filter: i <= review.rating ? 'drop-shadow(0 0 3px #ff80bf88)' : 'none' }}
-              />
+            <Rating 
+                  value={review.rating} 
+                  precision={0.5} 
+                  readOnly 
+                  size="small" 
+                  sx={{ color: '#fbbf24' }} 
+                />
             ))}
           </div>
 
