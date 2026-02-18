@@ -146,11 +146,11 @@ const handleEdit = (review) => {
               
               {/* Navigationslänkar */}
               <Link to="/stats" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-                <Trophy size={16} style={{ marginRight: '8px' }}/> Stats
+                <Trophy size={24} style={{ marginRight: '8px' }}/> Stats
               </Link>
 
               <Link to="/map" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-                <MapPin size={16} style={{ marginRight: '8px' }}/> Karta
+                <MapPin size={24} style={{ marginRight: '8px' }}/> Karta
               </Link>
             </div>
 

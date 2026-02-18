@@ -139,7 +139,6 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
         {/* Star rating */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <div style={{ display: 'flex', gap: '2px' }}>
-            {[1, 2, 3, 4, 5].map(i => (
             <Rating 
                   value={review.rating} 
                   precision={0.5} 
@@ -147,7 +146,6 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
                   size="small" 
                   sx={{ color: '#fbbf24' }} 
                 />
-            ))}
           </div>
 
           {review.rating === 5 && (

@@ -252,7 +252,7 @@ body::before {
 }
 
 .form-card::before {
-  content: '✨ Nova Recension ✨';
+  content: '✨ Milkshake Reviews ✨';
   display: block;
   text-align: center;
   font-family: 'Playfair Display', serif;

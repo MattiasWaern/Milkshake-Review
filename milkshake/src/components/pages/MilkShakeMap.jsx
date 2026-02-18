@@ -100,7 +100,8 @@ export default function MilkshakeMap({ onBack, reviews }) {
                             </div>
                         `);
 
-                        new mapboxgl.Marker({ color: '#ec4899' })
+                        // Custom pink marker element
+                        new mapboxgl.Marker({color: '#ec4899' })
                             .setLngLat(coords)
                             .setPopup(popup)
                             .addTo(mapRef.current);
