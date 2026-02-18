@@ -249,7 +249,7 @@ export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit 
             marginBottom: '12px',
             paddingLeft: '4px',
           }}>
-            Inget omdöme skrivet... 🌸
+            Ingen Recension skriven... 🌸
           </p>
         )}
 
