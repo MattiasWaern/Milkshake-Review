@@ -22,6 +22,10 @@ export default function App() {
     place: '', location: '', flavor: '', rating: 5, price: '', 
     date: new Date().toISOString().split('T')[0], review: '', reviewer: ''
   });
+  const [localFavorites, setLocalFavorites] = useState(() => {
+  const saved = localStorage.getItem('milkshake_favs');
+  return saved ? JSON.parse(saved) : [];
+});
 
 useEffect(() => {
     const reviewsCollection = collection(db, "reviews");
@@ -91,16 +95,18 @@ useEffect(() => {
     }
   };
 
-  const toggleFavorite = async (id) => {
-    const reviewToUpdate = reviews.find(r => r.id === id);
-    if (!reviewToUpdate) return;
-    try {
-      const reviewRef = doc(db, "reviews", id);
-      await updateDoc(reviewRef, { favorite: !reviewToUpdate.favorite });
-    } catch (e) {
-      console.error("Error toggling favorite: ", e);
-    }
-  };
+const toggleFavorite = (id) => {
+  setLocalFavorites(prev => {
+    const isFav = prev.includes(id);
+    const nextFavs = isFav 
+      ? prev.filter(favId => favId !== id) 
+      : [...prev, id]; 
+    
+   
+    localStorage.setItem('milkshake_favs', JSON.stringify(nextFavs));
+    return nextFavs;
+  });
+};
 
   const handleEdit = (review) => {
     setFormData(review);
@@ -333,13 +339,18 @@ useEffect(() => {
                   {expandedPlace === placeName && (
                     <div className="review-grid" style={{ padding: '1rem 0' }}>
                       {groupedReviews[placeName].map(r => (
-                        <ReviewCard 
-                          key={r.id} 
-                          review={r} 
-                          onDelete={deleteReview}
-                          onToggleFavorite={toggleFavorite}
-                          onEdit={() => handleEdit(r)}
-                        />
+  <ReviewCard 
+        key={r.id} 
+        review={{
+          ...r,
+          // Här mappar vi om Firebase-datan så att 'favorite' styrs av din lokala lista
+          favorite: localFavorites.includes(r.id) 
+        }} 
+        onDelete={deleteReview}
+        // Vi skickar r.id direkt in i funktionen här
+        onToggleFavorite={() => toggleFavorite(r.id)} 
+        onEdit={() => handleEdit(r)}
+      />
                       ))}
                     </div>
                   )}
@@ -350,7 +361,7 @@ useEffect(() => {
         } />
 
         
-        <Route path="/stats" element={<StatsView reviews={reviews} onBack={() => window.history.back()} />} />
+        <Route path="/stats" element={<StatsView reviews={reviews} localFavorites={localFavorites} onBack={() => window.history.back()} />} />
         <Route path="/map" element={<MilkshakeMap reviews={reviews} onBack={() => window.history.back()} />} />
         <Route path="/review/:id" element={<ReviewDetail reviews={reviews} />} />
 
