@@ -16,6 +16,7 @@ Appen låter dig spara, betygsätta och jämföra milkshakes från olika ställe
 * 📊 Statistikvy med snittbetyg, antal ställen m.m.
 * 🗺️ Interaktiv karta med Mapbox + OpenStreetMap (Nominatim)
 * 💾 All data sparas i `firebase`
+* 🔍Användarprofiler med Achievements
 * 🧭 Navigering med `react-router-dom`
 * 🎨 CSS med variabler för färgtema och konsekvent design
 
