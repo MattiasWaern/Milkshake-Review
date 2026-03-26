@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import{collection, getDocs} from "firsebase/firestore";
 import {db} from "../../firebase";
 import {Link} from "react-router-dom";
+import Achivements from "../ui/Achivements";
 
 
-function getAchivements(reviews){
-    return ACHIEVEMENTS .filter((a) => a.check(reviews));
-}
+
 
 function getStats(reviews){
     if (reviews.length === 0) return {avg: 0, best: null, count: 0};
