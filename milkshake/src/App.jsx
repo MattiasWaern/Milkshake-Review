@@ -206,7 +206,6 @@ function AppContent() {
   );
 }
 
-// App wraps allt i HashRouter
 export default function App() {
   return <AppContent />;
 }
