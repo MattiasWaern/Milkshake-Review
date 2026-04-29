@@ -1,5 +1,5 @@
 
 export const AVATARS = {
-    "Annika": "/annika.png",
-    "Mattias": "/mattias.png",
+  "Annika": "/Milkshake-Review/annika.png",
+  "Mattias": "/Milkshake-Review/mattias.png",
 };
