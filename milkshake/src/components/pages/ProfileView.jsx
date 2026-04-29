@@ -1,39 +1,43 @@
 import { useEffect, useState } from "react";
-import{collection, getDocs} from "firebase/firestore";
-import { db } from "../../firebase"; 
-import {Link} from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+import { Link } from "react-router-dom";
 import Achivements from "../ui/Achivements";
+import Rating from "@mui/material/Rating"; 
 
+function getStats(reviews) {
+  if (reviews.length === 0)
+    return { avg: 0, best: null, count: 0, totalSpent: 0 };
 
+  const avg =
+    reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 
+  const best = reviews.reduce((a, b) =>
+    a.rating >= b.rating ? a : b
+  );
 
-function getStats(reviews){
-    if (reviews.length === 0) return {avg: 0, best: null, count: 0};
-    const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-    const best = reviews.reduce((a, b) => (a.rating >= b.rating ? a: b));
-    const totalSpent = reviews.reduce((sum, r) => sum + (Number(r.price) || 0), 0);
-  return { avg: avg.toFixed(1), best, count: reviews.length, totalSpent };}
+  const totalSpent = reviews.reduce(
+    (sum, r) => sum + (Number(r.price) || 0),
+    0
+  );
 
-function groupByUser(reviews){
-    return reviews.reduce((acc, review) => {
-        const name = review.reviewer || review.user ||review.name || "Okänd";
-        if(!acc[name]) acc[name] = [];
-        acc[name].push(review);
-        return acc;
-    }, {});
+  return { avg, best, count: reviews.length, totalSpent };
 }
 
+function groupByUser(reviews) {
+  return reviews.reduce((acc, review) => {
+    const name =
+      review.reviewer || review.user || review.name || "Okänd";
+    if (!acc[name]) acc[name] = [];
+    acc[name].push(review);
+    return acc;
+  }, {});
+}
 
-function ProfileCard({name, reviews}) {
-    const stats = getStats(reviews);
+function ProfileCard({ name, reviews }) {
+  const stats = getStats(reviews);
 
-    const renderStars = (rating) => {
-      const fullStars = Math.floor(rating);
-      const halfStar = rating % 1 >= 0.5 ? "⭐" : "";
-      return "⭐".repeat(fullStars) + halfStar;
-    };
-
-    return (
+  return (
     <div className="profile-card">
       <div className="profile-header">
         <div className="profile-avatar">
@@ -41,21 +45,29 @@ function ProfileCard({name, reviews}) {
         </div>
         <div>
           <h2 className="profile-name">{name}</h2>
-          <p className="profile-subtitle">{stats.count} recensioner</p>
-          <p className="profile-subtitle">{stats.totalSpent} kr spenderat</p>
+          <p className="profile-subtitle">
+            {stats.count} recensioner
+          </p>
+          <p className="profile-subtitle">
+            {stats.totalSpent} kr spenderat
+          </p>
         </div>
       </div>
 
       {/* Statistik */}
       <div className="profile-stats">
         <div className="stat-box">
-          <span className="stat-value">{stats.avg}</span>
+          <span className="stat-value">
+            {stats.avg.toFixed(1)}
+          </span>
           <span className="stat-label">Snittbetyg</span>
         </div>
+
         <div className="stat-box">
           <span className="stat-value">{stats.count}</span>
           <span className="stat-label">Recensioner</span>
         </div>
+
         <div className="stat-box">
           <span className="stat-value">
             {new Set(reviews.map((r) => r.place)).size}
@@ -65,45 +77,75 @@ function ProfileCard({name, reviews}) {
       </div>
 
       {/* Favoritshake */}
+      {stats.best && (
         <div className="profile-favorite">
-            <span className="favorite-label">🏅 Bästa shake</span>
-            <Link to={`/review/${stats.best.id}`} className="favorite-link">
-            {stats.best.name} - {stats.best.place}{""}
-            {renderStars(stats.best.rating)}
-            </Link>
-        </div>
+          <span className="favorite-label">🏅 Bästa shake</span>
 
-        <Achivements reviews={reviews}></Achivements>
+          <Link
+            to={`/review/${stats.best.id}`}
+            className="favorite-link"
+          >
+            {stats.best.name} - {stats.best.place}{" "}
+        
+         <Rating
+          value={stats.best.rating}
+          precision={0.5}
+          readOnly
+          size="medium"
+          sx={{
+            marginLeft: "8px",
+            marginBottom: "0px",
+            "& .MuiRating-iconEmpty": {
+              color: "rgb(167, 167, 167)", // adjust to match your card bg
+            },
+            "& .MuiRating-iconFilled": {
+              color: "#f5a623",
+            },
+          }}
+        />
+          </Link>
+        </div>
+      )}
+
+      <Achivements reviews={reviews} />
     </div>
-    );
+  );
 }
 
-export default function ProfilesView(){
-    const [grouped, setGrouped] = useState({});
-    const [loading, setLoading] = useState(true);
+export default function ProfilesView() {
+  const [grouped, setGrouped] = useState({});
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchReviews () {
-            const snapshot = await getDocs(collection(db, "reviews"));
-            const reviews = snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-              rating: Number(doc.data().rating)
-          }));
-            setGrouped(groupByUser(reviews));
-            setLoading(false);
-        }
-        fetchReviews();
-    }, []);
+  useEffect(() => {
+    async function fetchReviews() {
+      const snapshot = await getDocs(collection(db, "reviews"));
 
-    if (loading) return <p className="loading">Laddar profiler... 🥤</p>
+      const reviews = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        rating: Number(doc.data().rating), // 🔥 FIX
+      }));
 
-    return (
+      setGrouped(groupByUser(reviews));
+      setLoading(false);
+    }
+
+    fetchReviews();
+  }, []);
+
+  if (loading)
+    return <p className="loading">Laddar profiler... 🥤</p>;
+
+  return (
     <div className="profiles-page">
       <h1 className="profiles-title">👤 Recensenter</h1>
       <div className="profiles-grid">
         {Object.entries(grouped).map(([name, reviews]) => (
-          <ProfileCard key={name} name={name} reviews={reviews} />
+          <ProfileCard
+            key={name}
+            name={name}
+            reviews={reviews}
+          />
         ))}
       </div>
     </div>
