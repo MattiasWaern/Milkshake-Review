@@ -82,28 +82,23 @@ function ProfileCard({ name, reviews }) {
           <span className="favorite-label">🏅 Bästa shake</span>
 
           <Link
-            to={`/review/${stats.best.id}`}
-            className="favorite-link"
-          >
-            {stats.best.name} - {stats.best.place}{" "}
-        
-         <Rating
-          value={stats.best.rating}
-          precision={0.5}
-          readOnly
-          size="medium"
-          sx={{
-            marginLeft: "8px",
-            marginBottom: "0px",
-            "& .MuiRating-iconEmpty": {
-              color: "rgb(167, 167, 167)", // adjust to match your card bg
-            },
-            "& .MuiRating-iconFilled": {
-              color: "#f5a623",
-            },
-          }}
-        />
-          </Link>
+  to={`/review/${stats.best.id}`}
+  className="favorite-link"
+  style={{ display: "flex", alignItems: "center" }}
+>
+  {stats.best.name} - {stats.best.place}
+  <Rating
+    value={stats.best.rating}
+    precision={0.5}
+    readOnly
+    size="medium"
+    sx={{
+      marginLeft: "8px",
+      "& .MuiRating-iconEmpty": { color: "rgba(0,0,0,0.25)" },
+      "& .MuiRating-iconFilled": { color: "#fbbf24" },
+    }}
+  />
+</Link>
         </div>
       )}
 
