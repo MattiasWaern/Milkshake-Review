@@ -118,7 +118,7 @@ function AppContent() {
               <div className="form-card">
                 <div className="input-row">
                   <input placeholder="Ställe (t.ex. Max)" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} />
-                  <input placeholder="Plats (t.ex. Norrtälje)" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
+                  <input placeholder="Plats (t.ex. Norrtälje eller gata)" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} />
                 </div>
 
                 <div style={{ marginBottom: '1.5rem' }}>

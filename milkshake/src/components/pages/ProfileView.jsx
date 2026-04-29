@@ -12,7 +12,7 @@ function getStats(reviews){
     const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
     const best = reviews.reduce((a, b) => (a.rating >= b.rating ? a: b));
     const totalSpent = reviews.reduce((sum, r) => sum + (Number(r.price) || 0), 0);
-return { avg: avg.toFixed(1), best, count: reviews.length, totalSpent };}
+  return { avg: avg.toFixed(1), best, count: reviews.length, totalSpent };}
 
 function groupByUser(reviews){
     return reviews.reduce((acc, review) => {
@@ -23,12 +23,15 @@ function groupByUser(reviews){
     }, {});
 }
 
-//ProfilKort
 
 function ProfileCard({name, reviews}) {
     const stats = getStats(reviews);
 
-    const renderStars = (rating) => "⭐".repeat(Math.round(rating));
+    const renderStars = (rating) => {
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5 ? "⭐" : "";
+      return "⭐".repeat(fullStars) + halfStar;
+    };
 
     return (
     <div className="profile-card">
@@ -83,9 +86,10 @@ export default function ProfilesView(){
         async function fetchReviews () {
             const snapshot = await getDocs(collection(db, "reviews"));
             const reviews = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
+              id: doc.id,
+              ...doc.data(),
+              rating: Number(doc.data().rating)
+          }));
             setGrouped(groupByUser(reviews));
             setLoading(false);
         }
