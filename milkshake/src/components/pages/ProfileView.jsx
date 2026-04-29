@@ -39,11 +39,21 @@ function ProfileCard({ name, reviews }) {
       <div className="profile-header">
         <div className="profile-avatar">
           {AVATARS[name] ? (
-          <img src={AVATARS[name]} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
-        ) : (
-          name.charAt(0).toUpperCase()
-        )}
-  </div>
+            <img
+              src={AVATARS[name]}
+              alt={name}
+              style={{
+                width: "56px",
+                height: "56px",
+                objectFit: "cover",
+                objectPosition: "center-bottom", // justerar fokus mitten
+                borderRadius: "50%",
+              }}
+            />
+          ) : (
+            name.charAt(0).toUpperCase()
+          )}
+        </div>
         <div>
           <h2 className="profile-name">{name}</h2>
           <p className="profile-subtitle">{stats.count} recensioner</p>
