@@ -172,6 +172,7 @@ function AppContent() {
             <div className="places-list" style={{ marginTop: '2rem' }}>
               {Object.keys(groupedReviews).map(placeName => (
                 <div key={placeName} className="place-group" style={{ marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <button onClick={() => setExpandedPlace(expandedPlace === placeName ? null : placeName)} className="place-header-btn">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       {expandedPlace === placeName ? <ChevronDown /> : <ChevronRight />}
@@ -179,6 +180,46 @@ function AppContent() {
                       <span className="count-badge">{groupedReviews[placeName].length}</span>
                     </div>
                   </button>
+                  <button
+                    onClick={() => {
+                      const sample = groupedReviews[placeName][0];
+                      setFormData({
+                        place: sample.place,
+                        location: sample.location,
+                        flavor: '',
+                        rating: 5,
+                        price: '',
+                        date: new Date().toISOString().split('T')[0],
+                        review: '',
+                        reviewer: '',
+                      });
+                      setEditingId(null);
+                      setShowForm(true);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    title="Ny recension här"
+                    style={{
+                      background: 'linear-gradient(135deg, #ff80bf, #b388ff)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '26px',
+                      height: '26px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      color: 'white',
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      boxShadow: '2px 2px 0 #ffadd6',
+                      flexShrink: 0,
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.2)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    +
+                  </button>
+                </div>
                   {expandedPlace === placeName && (
                     <div className="review-grid" style={{ padding: '1rem 0' }}>
                       {groupedReviews[placeName].map(r => (
