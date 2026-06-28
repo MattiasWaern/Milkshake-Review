@@ -58,6 +58,34 @@ export const ACHIEVEMENTS = [
                 }, {})
             ).some((count) => count >= 3),
     },
+    {
+        id: "Lil Spender",
+        label: "Lil Spender",
+        icon: "💵",
+        description: "Spenderat mer än 200kr på milkshakes",
+        check: (reviews) => reviews.reduce((sum, r) => sum + (Number(r.price) || 0), 0) > 200,
+    },
+    {
+        id: "Medium Spender",
+        label: "Medium Spender",
+        icon: "💵💵",
+        description: "Spenderat mer än 400kr på milkshakes",
+        check: (reviews) => reviews.reduce((sum, r) => sum + (Number(r.price) || 0), 0) > 400,
+    },
+    {
+        id: "Big Spender",
+        label: "Big Spender",
+        icon: "💰💰",
+        description: "Spenderat mer än 800kr på milkshakes",
+        check: (reviews) => reviews.reduce((sum, r) => sum + (Number(r.price) || 0), 0) > 800,
+    },
+    {
+        id: "Rikemansbarn",
+        label: "Rikemansbarn",
+        icon: "💰💰💰💰",
+        description: "Spenderat mer än 1200kr på milkshakes",
+        check: (reviews) => reviews.reduce((sum, r) => sum + (Number(r.price) || 0), 0) > 1200,
+    },
 ];
 
 
