@@ -4,7 +4,7 @@ import Badge from './Badge';
 import { Link } from 'react-router-dom';
 import Rating from '@mui/material/Rating'; 
 
-export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit }) {
+export default function ReviewCard({ review, onToggleFavorite, onDelete, onEdit, onAddReview }) {
   return (
     <div style={{
       background: 'white',
